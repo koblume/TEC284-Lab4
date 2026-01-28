@@ -11,6 +11,7 @@ void setup() {
   u8x8.clear();
   
   dht.begin();
+  pinMode(4, OUTPUT);
 }
 
 void loop() {
@@ -29,5 +30,19 @@ void loop() {
   u8x8.println(temperature);
   u8x8.println("Humidity: ");
   u8x8.println(humidity);
+
+  int thisPitch = map(humidity, 400, 1000, 800, 1500);
+
+  if(humidity > 70){
+    tone(5, thisPitch, 2000);
+    digitalWrite(4, HIGH);  // turn the LED on (HIGH is the voltage level)
+    delay(1000);                      // wait for a second
+    digitalWrite(4, LOW);   // turn the LED off by making the voltage LOW
+    delay(1000);                      // wait for a second
+  }
+  else{
+    noTone(5);
+  }
+
 }
 
